@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+
+        button{
+            margin: 70px;
+            scale: 2;
+        }
+
+    </style>
+
+</head>
+<body>
+    <div id="nfc">
+        <button onclick="nfcReader()">aperte</button>
+    </div>
+
+    <script>
+
+        async function nfcReader() {
+            let nfcField = document.getElementById('nfc')
+            try {
+                const ndef = new NDEFReader()
+                await ndef.scan()
+                ndef.onreading = event => {
+                    nfcField.innerText = 'Tag lida: ' + event.serialNumber
+                }
+            } catch (error) {
+                nfcField.innerText = 'Erro: ' + error
+            }
+        }
+    </script>
+</body>
+</html>
