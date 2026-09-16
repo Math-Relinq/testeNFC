@@ -58,6 +58,14 @@ async function nfcRegister(cartao, output) {
     const select = document.createElement('select')
     select.id = 'userSelect'
 
+    // placeholder para que escolher o primeiro usuario tambem dispare o 'change'
+    const placeholder = document.createElement('option')
+    placeholder.innerText = 'Selecione...'
+    placeholder.value = ''
+    placeholder.disabled = true
+    placeholder.selected = true
+    select.appendChild(placeholder)
+
     usuarios.forEach((usuario, i) => {
         const option = document.createElement('option')
         option.value = i
