@@ -2,14 +2,20 @@ import { usuarios } from "./users.js"
 
 async function nfcReader() {
     
-    let nfcField = document.getElementById('nfc')
+    let output = document.getElementById('campo')
     
     try {
         const ndef = new NDEFReader()
         await ndef.scan()
 
-        ndef.onreading = async event => {
-            let id = await event.serialNumber
+        ndef.onreading =  event => {
+            let cartao = event.serialNumber
+
+            usuarios.forEach((user) => {
+                if (String(user.nfc_id) === String(cartao)) {
+                    output.innerText = JSON.stringify(user)
+                }
+            })
 
         }
 
@@ -34,11 +40,11 @@ async function nfcReader() {
         //     }
         // }
     } catch (err) {
-        nfcField.innerText = 'Erro: ' + err
+        output.innerText = 'Erro: ' + err
     }
 }
 
-async function nfcRegister() {
+async function nfcRegister(user, cartao) {
 
     const label = document.createElement('label')
     label.innerText = 'Qual usuário deseja vincular?'
@@ -62,6 +68,7 @@ async function nfcRegister() {
 
     select.addEventListener('change', () => {
         let usuarioEscolhido = usuarios[select.value]
+        usuarioEscolhido.nfc_id = cartao
     })
 }
 
