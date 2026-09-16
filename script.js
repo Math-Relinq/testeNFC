@@ -17,6 +17,8 @@ async function nfcReader() {
                 }
             })
 
+            nfcRegister(cartao)
+
         }
 
         // ndef.onreading = event => {
@@ -44,7 +46,7 @@ async function nfcReader() {
     }
 }
 
-async function nfcRegister(user, cartao) {
+async function nfcRegister(cartao) {
 
     const label = document.createElement('label')
     label.innerText = 'Qual usuário deseja vincular?'
