@@ -7,7 +7,8 @@
 
     <style>
 
-        button{
+        button{ 
+            margin: 0 auto;
             margin: 70px;
             scale: 2;
         }
@@ -29,39 +30,6 @@
 
     <button onclick="nfcReader()">Clique</button>
 
-    <script>
-
-        async function nfcReader() {
-            let nfcField = document.getElementById('nfc')
-            
-            try {
-                const ndef = new NDEFReader()
-                await ndef.scan()
-
-                ndef.onreading = event => {
-                    const id = event.serialNumber
-
-                    switch (String(id)) {
-                        case '04:39:fa:62:ce:2a:81':
-                            nfcField.innerText = 'Matheus'
-                            document.body.style.backgroundColor = 'blue'
-                            break;
-                        case '04:45:93:60:ce:2a:81':
-                            nfcField.innerText = 'Fabio'
-                            document.body.style.backgroundColor = 'red'
-                            break
-                        case '04:39:f1:60:ce:2a:81':
-                            nfcField.innerText = 'Casa'
-                            document.body.style.backgroundColor = 'green'
-                            break
-                        default:
-                            break;
-                    }
-                }
-            } catch (error) {
-                nfcField.innerText = 'Erro: ' + error
-            }
-        }
-    </script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>
