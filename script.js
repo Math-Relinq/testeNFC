@@ -11,8 +11,8 @@ async function nfcReader() {
         ndef.onreading =  event => {
             let cartao = event.serialNumber
 
-            usuarios.forEach((user) => {
-                if (String(user.nfc_id) === String(cartao)) {
+            usuarios.forEach((user, i) => {
+                if (user.nfc_id == cartao) {
                     output.innerText = JSON.stringify(user)
                 }
             })
