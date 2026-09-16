@@ -11,13 +11,13 @@ async function nfcReader() {
         ndef.onreading =  event => {
             let cartao = event.serialNumber
 
-            usuarios.forEach((user, i) => {
-                if (user.nfc_id == cartao) {
-                    output.innerText = JSON.stringify(user)
-                }
-            })
+            const user = usuarios.find(u => u.nfc_id == cartao)
 
-            nfcRegister(cartao)
+            if (user) {
+                output.innerText = JSON.stringify(user)
+            } else {
+                nfcRegister(cartao)
+            }
 
         }
 
