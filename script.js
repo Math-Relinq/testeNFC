@@ -8,9 +8,9 @@ async function nfcReader() {
         const ndef = new NDEFReader()
         await ndef.scan()
 
-        ndef.onreading = event => {
-            let id = event.serialNumber
-            alert(id)
+        ndef.onreading = async event => {
+            let id = await event.serialNumber
+
         }
 
         // ndef.onreading = event => {
