@@ -24,11 +24,27 @@
 
         async function nfcReader() {
             let nfcField = document.getElementById('nfc')
+            
             try {
                 const ndef = new NDEFReader()
                 await ndef.scan()
+
                 ndef.onreading = event => {
-                    nfcField.innerText = 'Tag lida: ' + event.serialNumber
+                    const id = event.serialNumber
+
+                    switch (String(id)) {
+                        case '04:39:fa:62:ce:2a:81':
+                            nfcField.innerText = 'Matheus'
+                            break;
+                        case '04:45:93:60:ce:2a:81':
+                            nfcField.innerText = 'Fabio'
+                            break
+                        case '04:39:f1:60:ce:2a:81':
+                            nfcField.innerText = 'Casa'
+                            break
+                        default:
+                            break;
+                    }
                 }
             } catch (error) {
                 nfcField.innerText = 'Erro: ' + error
