@@ -16,7 +16,7 @@ async function nfcReader() {
             if (user) {
                 output.innerText = JSON.stringify(user)
             } else {
-                nfcRegister(cartao)
+                nfcRegister(cartao, output)
             }
 
         }
@@ -46,7 +46,10 @@ async function nfcReader() {
     }
 }
 
-async function nfcRegister(cartao) {
+async function nfcRegister(cartao, output) {
+
+    // leituras repetidas do mesmo cartao nao devem criar varios selects
+    if (document.getElementById('userSelect')) return
 
     const label = document.createElement('label')
     label.innerText = 'Qual usuário deseja vincular?'
@@ -65,13 +68,19 @@ async function nfcRegister(cartao) {
     document.body.appendChild(label)
     document.body.appendChild(select)
 
-    select.focus()
-    select.showPicker()
-
     select.addEventListener('change', () => {
         let usuarioEscolhido = usuarios[select.value]
         usuarioEscolhido.nfc_id = cartao
+        output.innerText = JSON.stringify(usuarioEscolhido)
+        label.remove()
+        select.remove()
     })
+
+    select.focus()
+    try {
+        // showPicker() exige gesto do usuario; o evento de leitura NFC nao conta
+        select.showPicker()
+    } catch (err) {}
 }
 
 window.nfcReader = nfcReader
